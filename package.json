@@ -1,0 +1,22 @@
+{
+  "name": "weatherproject",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jhan-dev/weatherProject.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jhan-dev/weatherProject/issues"
+  },
+  "homepage": "https://github.com/jhan-dev/weatherProject#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
