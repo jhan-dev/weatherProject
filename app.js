@@ -1,33 +1,40 @@
 const express = require("express")
 const https = require("https")
+const bodyParser = require("body-parser")
+
 const app = express()
 
+app.use(bodyParser.urlencoded({extended: true}))
+
 app.get("/", function(req, res){
+    res.sendFile(__dirname + "/index.html")
+})
 
-    const url = "https://api.openweathermap.org/data/2.5/weather?q=Lasvegas&appid=b10af37aefcd92734f4b755e42453aa0&units=imperial"
-
+app.post("/", function(req, res){
+    // console.log("Post request received.")
+    // console.log(req.body.cityName)
+    const query = req.body.cityName
+    const apiKey = "b10af37aefcd92734f4b755e42453aa0"
+    const unit = "imperial"
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${query}&appid=${apiKey}&units=${unit}`
+    
     https.get(url, function(response){
         console.log(response.statusCode)
-
+    
         response.on("data", function(data){
             const weatherData = JSON.parse(data)
             const temp = weatherData.main.temp
             const weatherDesc = weatherData.weather[0].description
             const icon = weatherData.weather[0].icon
             const imgURL = `http://openweathermap.org/img/wn/${icon}@2x.png`
-
-            res.write(`<h1>The temperature in Las Vegas is ${temp} fahrenheit.</h1>`)
-
+    
+            res.write(`<h1>The temperature in ${query} is ${temp} fahrenheit.</h1>`)
             res.write(`<p>The weather is currently ${weatherDesc}.</p>`)
-
             res.write(`<img src="${imgURL}">`)
-
             res.send()
         })
     })
 })
-
-
 
 
 app.listen(3000, function(){
